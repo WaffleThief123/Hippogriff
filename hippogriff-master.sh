@@ -1,5 +1,15 @@
 #!/bin/bash
 
+
+███████╗██████╗  █████╗ ██████╗ ████████╗ █████╗       ██████╗ ██╗██████╗ ██████╗ 
+██╔════╝██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗      ██╔══██╗██║██╔══██╗██╔══██╗
+███████╗██████╔╝███████║██████╔╝   ██║   ███████║█████╗██████╔╝██║██████╔╝██║  ██║
+╚════██║██╔═══╝ ██╔══██║██╔══██╗   ██║   ██╔══██║╚════╝██╔══██╗██║██╔══██╗██║  ██║
+███████║██║     ██║  ██║██║  ██║   ██║   ██║  ██║      ██████╔╝██║██║  ██║██████╔╝
+╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝      ╚═════╝ ╚═╝╚═╝  ╚═╝╚═════╝ 
+                                                                                  
+
+
 # Check for the --yes command line argument to skip yes/no prompts
 if [ "$1" = "--yes" ]
 then
@@ -7,6 +17,8 @@ then
 else
     YES=0
 fi
+
+sysVER=arch
 
 set -o nounset
 
@@ -26,7 +38,7 @@ then
         fi
     }
 fi
-
+sysVER=arch
 if [ $YES -eq 0 ]
 then
     distro="${1:-$(lsb_release -i|cut -f 2)}"
@@ -35,7 +47,7 @@ else
     distro="${2:-$(lsb_release -i|cut -f 2)}"
     distro_version="${2:-$(lsb_release -r|cut -f 2|cut -c1-2)}"
 fi
-REQUIRED_UTILS="wget tar python curl"
+REQUIRED_UTILS="wget tar python curl rename"
 APTCMD="apt"
 APTGETCMD="apt-get"
 YUMCMD="yum"
@@ -79,16 +91,30 @@ function install_ffuf
     mkdir /tmp/fuff
     cd /tmp/fuff/
     lastversion -d --assets https://github.com/ffuf/ffuf/
+    rename 's/ffuf_?..?..?..?_*//;' *
+    # psuedocode:
+    # echo $sysVER | grep 64 0$<1
     
+    arch | grep 64
+    if [ $? -ne 0 ]
+        then
+        arch | grep arm 
+        if [ $? -ne 0 ]
+            then 
+            tar -xzf linux_arm*
+            rm *.tar.gz
+        
+        else
 
+    fi
+
+    
 }
 
-function install_sasquatch
+function install_waybackurls
 {
-    git clone https://github.com/devttys0/sasquatch
-    (cd sasquatch && $SUDO ./build.sh)
-    $SUDO rm -rf sasquatch
-}
+    git clone https://gist.github.com/Alyssa-o-Herrera/987dd305b0b637b3f67842eb6844d4ba
+    mv 987dd305b0b637b3f67842eb6844d4ba/waybackurls.py ./
 
 function install_jefferson
 {
