@@ -106,6 +106,7 @@ fi
 ##################################
 MasterInstallDir=/usr/lib/hippogriff
 mkdir $MasterInstallDir
+echo "RBENV_ROOT=/usr/lib/hippogriff/rbenv/" >> ~/.bashrc
 
 
 # Possible fix for unbound variable issue?
@@ -113,7 +114,7 @@ SUDO=sudo
 
 function install_ruby
 {
-    echo "RBENV_ROOT=/usr/lib/hippogriff/rbenv/" >> ~/.bashrc
+    source ~/.bashrc
     git clone https://github.com/rbenv/rbenv.git /tmp/rbenv
     git clone https://github.com/rbenv/ruby-build.git /tmp/rbenv/plugins/ruby-build
     mv /tmp/rbenv $MasterInstallDir/
@@ -127,7 +128,7 @@ function install_ruby
     echo "" >> ~/.bashrc
     echo "# Ruby Version added as alias to run proper" ~/.bashrc
     echo "alias ruby=/usr/lib/hippogriff/rbenv/versions/2.7.1/bin/ruby" >> ~/.bashrc
-}
+}   
 
 
 function install_ffuf
