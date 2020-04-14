@@ -240,6 +240,7 @@ install_go
 
 # Requires goLang to be installed to run these
 install_waybackurls
+echo "Wayback URLS installed"
 
 ###############
 # Post execution cleanup and stuff
