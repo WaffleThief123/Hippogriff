@@ -35,8 +35,6 @@ else
     YES=0
 fi
 
-sysVER=arch
-
 set -o nounset
 
 if ! which lsb_release > /dev/null
@@ -102,6 +100,12 @@ else
     REQUIRED_UTILS="sudo $REQUIRED_UTILS"
 fi
 
+##################################
+#  Install Variables (Global)
+##################################
+MasterInstallDir=/usr/lib/hippogriff
+
+
 function install_ffuf
 {
     yes | $PIP_COMMANDS install lastversion
@@ -126,7 +130,9 @@ function install_ffuf
         tar -xzf linux_arm*
     fi
 # cleanup
-rm /tmp/ffuf/*.tar.gz && echo "ffuf install success"
+rm /tmp/ffuf/*.tar.gz
+mkdir $MasterInstallDir/ffuf && cp -r /tmp/ffuf/ $MasterInstallDir/
+echo "ffuf install success"
 
 }
 
