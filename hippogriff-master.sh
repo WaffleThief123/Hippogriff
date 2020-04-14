@@ -208,9 +208,14 @@ function install_cloudscraper
 
 function install_linkfinder
 {
-
-
-    
+    mkdir $MasterInstallDir/linkfinder/
+    git clone https://github.com/GerbenJavado/LinkFinder.git
+    cd /tmp/LinkFinder
+    pip3 install -r requirements.txt
+    cp -r * $MasterInstallDir/linkfinder/
+    echo "" >> ~/.bashrc
+    echo "# Linkfinder alias for .bashrc to make work." >> ~/.bashrc
+    echo 'alias linkfinder="python3 /usr/lib/hippogriff/linkfinder/linkfinder.py"' >> ~/.bashrc
 }
 
 
