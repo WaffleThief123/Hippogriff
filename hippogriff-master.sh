@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "
 
 ███████╗██████╗  █████╗ ██████╗ ████████╗ █████╗       ██████╗ ██╗██████╗ ██████╗ 
 ██╔════╝██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗      ██╔══██╗██║██╔══██╗██╔══██╗
@@ -7,6 +8,7 @@
 ╚════██║██╔═══╝ ██╔══██║██╔══██╗   ██║   ██╔══██║╚════╝██╔══██╗██║██╔══██╗██║  ██║
 ███████║██║     ██║  ██║██║  ██║   ██║   ██║  ██║      ██████╔╝██║██║  ██║██████╔╝
 ╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝      ╚═════╝ ╚═╝╚═╝  ╚═╝╚═════╝ 
+"
                                                                                   
 
 
@@ -95,20 +97,21 @@ function install_ffuf
     # psuedocode:
     # echo $sysVER | grep 64 0$<1
     
+# x64 check
     arch | grep 64
-    if [ $? -ne 0 ]
-        then
-        arch | grep arm 
-        if [ $? -ne 0 ]
-            then 
-            tar -xzf linux_arm*
-            rm *.tar.gz
-        
-        else
-
+    if [ $? -eq 0 ]
+    then
+        tar -xzf linux_amd64*
     fi
-
-    
+# ARM check
+    arch | grep arm 
+    if [ $? -eq 0 ]
+    then
+        tar -xzf linux_arm*
+    fi
+# cleanup
+rm /tmp/ffuf/*.tar.gz
+echo "ffuf install success"
 }
 
 function install_waybackurls
@@ -293,7 +296,7 @@ fi
 install_pip_package matplotlib
 install_pip_package capstone
 install_sasquatch
-install_yaffshiv
+install_ffuf
 install_jefferson
 install_unstuff
 install_ubireader
