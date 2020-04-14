@@ -183,6 +183,7 @@ function install_updog
 {
     $PIP_COMMANDS install updog
     echo "" >> ~/.bashrc
+    echo "# UpDog Alias for .bashrc" >> ~/.bashrc
     echo "alias updog=~/.local/bin/updog" >> ~/.bashrc
 }
 
@@ -272,15 +273,17 @@ install_ffuf
 install_updog
 install_go
 install_ruby
+install_linkfinder
+echo "Core Utils Installed"
 
 # Requires goLang to be installed to run these
 install_waybackurls
 
-
+echo "goLang Utils Installed"
 # Requires ruby
 
 
-
+echo "Ruby Utils Installed"
 
 ###############
 # Post execution cleanup and stuff
