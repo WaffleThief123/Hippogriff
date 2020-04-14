@@ -20,4 +20,4 @@ rm -rf $MasterInstallDir
 rm -rf ~/.rbenv
 
 echo "Don't forget to clean up your ~/.bashrc!!!!"
-vim ~/.bashrc
+sleep 5 && vim ~/.bashrc
