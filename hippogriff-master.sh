@@ -268,7 +268,7 @@ then
     echo "          This script puts files in the following directories:"
     echo "          /usr/bin/hippogriff  $HOME/.rbenv/  /tmp/ "             
     echo ""
-    echo "          This script makes changes to the following file(s)
+    echo "          This script makes changes to the following file(s) "
     echo "          $HOME/.bashrc"             
     echo ""
     echo ""
