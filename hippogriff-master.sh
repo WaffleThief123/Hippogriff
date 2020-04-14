@@ -127,6 +127,12 @@ function install_ruby
     curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
 }   
 
+function install_aquatone
+{
+    source ~/.bashrc
+    gem install aquatone
+}
+
 
 function install_ffuf
 {
@@ -160,6 +166,23 @@ function install_waybackurls
    source ~/.bashrc
    go get github.com/tomnomnom/waybackurls
 }
+
+function install_secretz
+{
+    go get -u github.com/lc/secretz
+    echo "enter your TravisCI api key now" && \
+    read TravisCIKey && \
+    echo "Is this the right key?     " $TravisCIKey 
+    if [ $? -eq 0 ]
+    then
+        echo "Sorry, Please run secretz -setkey <yourapikey> after the installer completes to add your API key."
+    else
+        echo "Thank you, User! I'll go ahead and tuck this away somewhere safe."
+        secretz -setkey $TravisCIKey 
+        
+    fi    
+}
+
 
 function install_pip_package
 {
@@ -244,7 +267,7 @@ then
     echo ""
     echo "          This script puts files in the following directories:"
     echo "          /usr/bin/hippogriff  $HOME/.rbenv/  /tmp/ "             
-
+    echo ""
     echo ""
     if [ $distro != Unknown ]
     then
@@ -304,7 +327,7 @@ install_waybackurls
 
 echo "goLang Utils Installed"
 # Requires ruby
-
+install_aquatone
 
 echo "Ruby Utils Installed"
 
