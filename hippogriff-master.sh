@@ -118,6 +118,7 @@ function install_ruby
     cd ~/.rbenv && src/configure && make -C src
     echo "# Ruby environment variables" >> ~/.bashrc
     echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+    echo 'export PATH="$HOME/.rbenv/versions/2.7.1/bin:$PATH"'  >> ~/.bashrc
     ~/.rbenv/bin/rbenv init
     source ~/.bashrc
     mkdir -p "$(rbenv root)"/plugins
