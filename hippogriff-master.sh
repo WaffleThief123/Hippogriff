@@ -24,8 +24,6 @@ With contributions from:
 batman 🦇
 
 '
-                                                                                  
-
 
 # Check for the --yes command line argument to skip yes/no prompts
 if [ "$1" = "--yes" ]
@@ -78,15 +76,13 @@ then
 else
     APT_CANDIDATES="git build-essential mtd-utils gzip bzip2 tar arj lhasa p7zip p7zip-full cabextract cramfsprogs cramfsswap squashfs-tools zlib1g-dev liblzma-dev liblzo2-dev sleuthkit default-jdk lzop srecord cpio $PYTHON3_APT_CANDIDATES"
 fi
-PYTHON2_APT_CANDIDATES="python-crypto python-lzo python-lzma python-pip python-tk"
+
 PYTHON3_APT_CANDIDATES="python3-crypto python3-pip python3-tk"
 PYTHON3_YUM_CANDIDATES=""
-YUM_CANDIDATES="git gcc gcc-c++ make openssl-devel qtwebkit-devel qt-devel gzip bzip2 tar arj p7zip p7zip-plugins cabextract squashfs-tools zlib zlib-devel lzo lzo-devel xz xz-compat-libs xz-libs xz-devel xz-lzma-compat python-backports-lzma lzip pyliblzma perl-Compress-Raw-Lzma lzop srecord"
-PYTHON2_YUM_CANDIDATES="python-pip python-Bottleneck cpio"
-FULLAPT_CANDIDATES="$APT_CANDIDATES $PYTHON2_APT_CANDIDATES"
-YUM_CANDIDATES="$YUM_CANDIDATES $PYTHON2_YUM_CANDIDATES"
-PIP_COMMANDS="pip3"
+FULLAPT_CANDIDATES="$APT_CANDIDATES"
 
+PIP_COMMANDS="pip3"
+PKGCMD=apt
 
 ###################
 ##  Maybe: Re-implement sudo prompt
@@ -135,7 +131,7 @@ echo "ffuf install success"
 
 function install_waybackurls
 {
-   git clone github.com/tomnomnom/waybackurls
+   go get github.com/tomnomnom/waybackurls
    
 }
 
@@ -179,7 +175,7 @@ function install_go
 # Make sure the user really wants to do this
 if [ $YES -eq 0 ]
 then
-    echo ""
+    echo " "
     echo "WARNING: This script will download and install all required and optional dependencies for Legion-Bird."
     echo "         This script has only been tested on, and is only intended for, Debian based systems."
     echo "         This script requires internet access."
@@ -218,52 +214,51 @@ do
 done
 
 # Check for supported package managers and set the PKG_* envars appropriately
-find_path $APTCMD
-if [ $? -eq 1 ]
-then
-    find_path $APTGETCMD
-    if [ $? -eq 1 ]
-    then
-        find_path $YUMCMD
-        if [ $? -eq 1 ]
-        then
-            NEEDED_UTILS="$NEEDED_UTILS $APTCMD/$APTGETCMD/$YUMCMD"
-        else
-            PKGCMD="$YUMCMD"
-            PKGCMD_OPTS="-y install"
-            PKG_CANDIDATES="$YUM_CANDIDATES"
-            PKG_PYTHON3_CANDIDATES="$PYTHON3_YUM_CANDIDATES"
-        fi
-    else
-        PKGCMD="$APTGETCMD"
-        PKGCMD_OPTS="install -y"
-        PKG_CANDIDATES="$FULLAPT_CANDIDATES"
-        PKG_PYTHON3_CANDIDATES="$PYTHON3_APT_CANDIDATES"
-    fi
-else
-    if "$APTCMD" install -s -y dpkg > /dev/null
-    then
-        PKGCMD="$APTCMD"
-        PKGCMD_OPTS="install -y"
-        PKG_CANDIDATES="$APT_CANDIDATES"
-        PKG_PYTHON3_CANDIDATES="$PYTHON3_APT_CANDIDATES"
-    else
-        PKGCMD="$APTGETCMD"
-        PKGCMD_OPTS="install -y"
-        PKG_CANDIDATES="$APT_CANDIDATES"
-        PKG_PYTHON3_CANDIDATES="$PYTHON3_APT_CANDIDATES"
-    fi
-fi
+#find_path $APTCMD
+#if [ $? -eq 1 ]
+#then
+#    find_path $APTGETCMD
+#    if [ $? -eq 1 ]
+#    then
+#        find_path $YUMCMD
+#        if [ $? -eq 1 ]
+#        then
+#            NEEDED_UTILS="$NEEDED_UTILS $APTCMD/$APTGETCMD/$YUMCMD"
+#        else
+#            PKGCMD="$YUMCMD"
+#            PKGCMD_OPTS="-y install"
+#            PKG_CANDIDATES="$YUM_CANDIDATES"
+#            PKG_PYTHON3_CANDIDATES="$PYTHON3_YUM_CANDIDATES"
+#        fi
+#    else
+#        PKGCMD="$APTGETCMD"
+#        PKGCMD_OPTS="install -y"
+#        PKG_CANDIDATES="$FULLAPT_CANDIDATES"
+#        PKG_PYTHON3_CANDIDATES="$PYTHON3_APT_CANDIDATES"
+#    fi
+#else
+#    if "$APTCMD" install -s -y dpkg > /dev/null
+#    then
+#        PKGCMD="$APTCMD"
+#        PKGCMD_OPTS="install -y"
+#        PKG_CANDIDATES="$APT_CANDIDATES"
+#        PKG_PYTHON3_CANDIDATES="$PYTHON3_APT_CANDIDATES"
+#    else
+#        PKGCMD="$APTGETCMD"
+##        PKGCMD_OPTS="install -y"
+#        PKG_CANDIDATES="$APT_CANDIDATES"
+#        PKG_PYTHON3_CANDIDATES="$PYTHON3_APT_CANDIDATES"
+#    fi
+#fi
 
-if [ "$NEEDED_UTILS" != "" ]
-then
-    echo "Please install the following required utilities: $NEEDED_UTILS"
-    exit 1
-fi
+#if [ "$NEEDED_UTILS" != "" ]
+#then
+#    echo "Please install the following required utilities: $NEEDED_UTILS"
+#    exit 1
+#fi
 
 
 # Do the needfull [install stuff]
-
 cd /tmp
 $SUDO $PKGCMD $PKGCMD_OPTS $PKG_CANDIDATES
 if [ $? -ne 0 ]
