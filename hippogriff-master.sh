@@ -104,7 +104,7 @@ fi
 
 function install_ffuf
 {
-    yes | pip install lastversion
+    yes | $PIP_COMMANDS install lastversion
     mkdir /tmp/fuff
     cd /tmp/fuff/
     lastversion -d --assets https://github.com/ffuf/ffuf/
@@ -208,7 +208,7 @@ function find_path
 }
 function install_updog
 {
-    pip3 install updog
+    $PIP_COMMANDS install updog
     echo "" >> ~/.bashrc
     echo "alias updog=~/.local/bin/updog" >> ~/.bashrc
 }
@@ -330,6 +330,8 @@ install_jefferson
 install_unstuff
 install_ubireader
 install_updog
+
+
 
 if [ $distro_version = "18" ]
 then
