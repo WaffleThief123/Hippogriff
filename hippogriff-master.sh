@@ -22,6 +22,7 @@ ______
 
 With contributions from:
 batman 🦇
+rez0m 🍺
 
 '
 
@@ -66,19 +67,18 @@ APTGETCMD="apt-get"
 
 if [ $distro = "Kali" ]
 then
-    APT_CANDIDATES="git build-essential mtd-utils gzip bzip2 tar arj lhasa p7zip p7zip-full cabextract util-linux firmware-mod-kit cramfsswap squashfs-tools zlib1g-dev liblzma-dev liblzo2-dev sleuthkit default-jdk lzop cpio"
+    APT_CANDIDATES="git build-essential mtd-utils gzip bzip2 tar arj lhasa p7zip p7zip-full cabextract util-linux firmware-mod-kit cramfsswap squashfs-tools zlib1g-dev liblzma-dev liblzo2-dev sleuthkit default-jdk lzop cpio libyaml-dev libssl-dev libreadline-dev libncurses5-dev libgdbm-dev bison autotools-dev autoconf automake"
 elif [ $distro_version = "17" ]
 then
-    APT_CANDIDATES="git build-essential mtd-utils gzip bzip2 tar arj lhasa p7zip p7zip-full cabextract cramfsswap squashfs-tools zlib1g-dev liblzma-dev liblzo2-dev sleuthkit default-jdk lzop srecord cpio"
+    APT_CANDIDATES="git build-essential mtd-utils gzip bzip2 tar arj lhasa p7zip p7zip-full cabextract cramfsswap squashfs-tools zlib1g-dev liblzma-dev liblzo2-dev sleuthkit default-jdk lzop srecord cpio libyaml-dev libssl-dev libreadline-dev libncurses5-dev libgdbm-dev bison autotools-devautoconf automake"
 elif [ $distro_version = "18" ]
 then
-    APT_CANDIDATES="git build-essential mtd-utils gzip bzip2 tar arj lhasa p7zip p7zip-full cabextract cramfsswap squashfs-tools zlib1g-dev liblzma-dev liblzo2-dev sleuthkit default-jdk lzop srecord cpio"
+    APT_CANDIDATES="git build-essential mtd-utils gzip bzip2 tar arj lhasa p7zip p7zip-full cabextract cramfsswap squashfs-tools zlib1g-dev liblzma-dev liblzo2-dev sleuthkit default-jdk lzop srecord cpio libyaml-dev libssl-dev libreadline-dev libncurses5-dev libgdbm-dev bison autotools-dev autoconf automake"
 else
-    APT_CANDIDATES="git build-essential mtd-utils gzip bzip2 tar arj lhasa p7zip p7zip-full cabextract cramfsprogs cramfsswap squashfs-tools zlib1g-dev liblzma-dev liblzo2-dev sleuthkit default-jdk lzop srecord cpio $PYTHON3_APT_CANDIDATES"
+    APT_CANDIDATES="git build-essential mtd-utils gzip bzip2 tar arj lhasa p7zip p7zip-full cabextract cramfsprogs cramfsswap squashfs-tools zlib1g-dev liblzma-dev liblzo2-dev sleuthkit default-jdk lzop srecord cpio $PYTHON3_APT_CANDIDATES libyaml-dev libssl-dev libreadline-dev libncurses5-dev libgdbm-dev bison autotools-dev autoconf automake"
 fi
 
 PYTHON3_APT_CANDIDATES="python3-crypto python3-pip python3-tk"
-PYTHON3_YUM_CANDIDATES=""
 FULLAPT_CANDIDATES="$APT_CANDIDATES"
 
 
@@ -99,13 +99,26 @@ if [[ $UID != 0 ]]; then
     echo "sudo $0 $*"
     exit 1
 fi
-# Possible fix for unbound variable issue?
-SUDO=sudo
+
 
 ##################################
 #  Install Variables (Global)
 ##################################
 MasterInstallDir=/usr/lib/hippogriff
+# Possible fix for unbound variable issue?
+SUDO=sudo
+
+function install_ruby
+{
+    git clone https://github.com/rbenv/rbenv.git /tmp/rbenv
+    git clone https://github.com/rbenv/ruby-build.git /tmp/rbenv/plugins/ruby-build
+    mv /tmp/rbenv $MasterInstallDir/
+    echo "# Ruby environment variables" >> ~/.bashrc
+    echo 'export PATH="/usr/lib/hippogriff/rbenv/bin:$PATH"' >> ~/.bashrc
+    echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+    echo 'export PATH="/usr/lib/hippogriff/rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
+    source ~/.bashrc
+}
 
 
 function install_ffuf
@@ -133,14 +146,12 @@ function install_ffuf
 rm /tmp/ffuf/*.tar.gz
 mkdir -p $MasterInstallDir/ffuf/ && cp /tmp/ffuf/* $MasterInstallDir/ffuf/
 echo "ffuf install success"
-
 }
 
 function install_waybackurls
 {
    source ~/.bashrc
    go get github.com/tomnomnom/waybackurls
-   
 }
 
 function install_pip_package
@@ -207,7 +218,7 @@ elif [ $distro != Unknown ]
 then
      echo "$distro $distro_version detected"
 else
-    echo "WARNING: Distro not detected, using package-manager defaults"
+    echo "WARNING: Distro not detected, using apt-get as default package manager."
 fi
 
 # Check to make sure we have all the required utilities installed
@@ -237,12 +248,19 @@ install_pip_package capstone
 install_ffuf
 install_updog
 install_go
+install_ruby
 
 # Requires goLang to be installed to run these
 install_waybackurls
 echo "Wayback URLS installed"
 
+# Requires ruby
+
+
+
+
 ###############
 # Post execution cleanup and stuff
 ###############
 source ~/.bashrc
+rm -rf /tmp/* 
