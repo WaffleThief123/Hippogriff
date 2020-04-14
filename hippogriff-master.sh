@@ -324,6 +324,7 @@ echo "Core Utils Installed"
 
 # Requires goLang to be installed to run these
 install_waybackurls
+install_secretz
 
 echo "goLang Utils Installed"
 # Requires ruby
