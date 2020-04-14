@@ -81,9 +81,15 @@ PYTHON3_APT_CANDIDATES="python3-crypto python3-pip python3-tk"
 PYTHON3_YUM_CANDIDATES=""
 FULLAPT_CANDIDATES="$APT_CANDIDATES"
 
+
+###################
+# Misc Global Variables
+###################
 PIP_COMMANDS="pip3"
 PKGCMD=apt
-
+PKGCMD_OPTS="install -y"
+PKG_CANDIDATES="$APT_CANDIDATES"
+PKG_PYTHON3_CANDIDATES="$PYTHON3_APT_CANDIDATES"
 ###################
 ##  Maybe: Re-implement sudo prompt
 ###################
@@ -245,10 +251,10 @@ done
 #        PKG_CANDIDATES="$APT_CANDIDATES"
 #        PKG_PYTHON3_CANDIDATES="$PYTHON3_APT_CANDIDATES"
 #    else
-#        PKGCMD="$APTGETCMD"
-##        PKGCMD_OPTS="install -y"
-#        PKG_CANDIDATES="$APT_CANDIDATES"
-#        PKG_PYTHON3_CANDIDATES="$PYTHON3_APT_CANDIDATES"
+        PKGCMD="$APTGETCMD"
+        PKGCMD_OPTS="install -y"
+        PKG_CANDIDATES="$APT_CANDIDATES"
+        PKG_PYTHON3_CANDIDATES="$PYTHON3_APT_CANDIDATES"
 #    fi
 #fi
 
