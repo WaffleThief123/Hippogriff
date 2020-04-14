@@ -192,9 +192,10 @@ function install_updog
 
 function install_go
 {
+    rm -rf ~/.go /root/.go
     sudo su -c "wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash"
     source ~/.bashrc
-    
+
 }
 
 function install_cloudscraper
