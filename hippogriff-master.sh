@@ -92,13 +92,12 @@ PIP_COMMANDS="pip3"
 ##  Maybe: Re-implement sudo prompt
 ###################
 # Check for root privileges
-if [ $UID -eq 0 ]
-then
-    SUDO=""
-else
-    SUDO="sudo"
-    REQUIRED_UTILS="sudo $REQUIRED_UTILS"
+if [[ $UID != 0 ]]; then
+    echo "Please run this script with sudo:"
+    echo "sudo $0 $*"
+    exit 1
 fi
+
 
 ##################################
 #  Install Variables (Global)
@@ -114,8 +113,6 @@ function install_ffuf
     cd /tmp/ffuf/
     lastversion -d --assets https://github.com/ffuf/ffuf/
     rename 's/ffuf_?..?..?..?_*//;' *
-    # psuedocode:
-    # echo $sysVER | grep 64 0$<1
     
 # x64 check
     arch | grep 64
@@ -129,7 +126,7 @@ function install_ffuf
     then
         tar -xzf linux_arm*
     fi
-# cleanup
+# ffuf cleanup
 rm /tmp/ffuf/*.tar.gz
 mkdir $MasterInstallDir/ffuf && cp -r /tmp/ffuf/ $MasterInstallDir/
 echo "ffuf install success"
@@ -138,54 +135,8 @@ echo "ffuf install success"
 
 function install_waybackurls
 {
-   clone https://gist.github.com/Alyssa-o-Herrera/987dd305b0b637b3f67842eb6844d4ba
-    mv 987dd305b0b637b3f67842eb6844d4ba/waybackurls.py ./
-    #can be replaced with go get github.com/tomnomnom/waybackurls instead, provides more functionality  
-}
-function install_jefferson
-{
-    install_pip_package "cstruct==1.0"
-    git clone https://github.com/sviehb/jefferson
-    (cd jefferson && $SUDO python2 setup.py install)
-    $SUDO rm -rf jefferson
-}
-
-function install_unstuff
-{
-    mkdir -p /tmp/unstuff
-    cd /tmp/unstuff
-    wget -O - http://my.smithmicro.com/downloads/files/stuffit520.611linux-i386.tar.gz | tar -zxv
-    $SUDO cp bin/unstuff /usr/local/bin/
-    cd -
-    rm -rf /tmp/unstuff
-}
-
-function install_cramfstools
-{
-  # Downloads cramfs tools from sourceforge and installs them to $INSTALL_LOCATION
-  TIME=`date +%s`
-  INSTALL_LOCATION=/usr/local/bin
-
-  # https://github.com/torvalds/linux/blob/master/fs/cramfs/README#L106
-  git clone https://github.com/npitre/cramfs-tools
-  # There is no "make install"
-  (cd cramfs-tools \
-  && make \
-  && $SUDO install mkcramfs $INSTALL_LOCATION \
-  && $SUDO install cramfsck $INSTALL_LOCATION)
-
-  rm -rf cramfs-tools
-}
-
-
-function install_ubireader
-{
-    git clone https://github.com/jrspruitt/ubi_reader
-    # Some UBIFS extraction breaks after this commit, due to "Added fatal error check if UBI block extends beyond file size"
-    # (see this commit: https://github.com/jrspruitt/ubi_reader/commit/af678a5234dc891e8721ec985b1a6e74c77620b6)
-    # Reset to a known working commit.
-    (cd ubi_reader && git reset --hard 0955e6b95f07d849a182125919a1f2b6790d5b51 && $SUDO python setup.py install)
-    $SUDO rm -rf ubi_reader
+   git clone github.com/tomnomnom/waybackurls
+   
 }
 
 function install_pip_package
@@ -201,7 +152,6 @@ function install_pip_package
 function find_path
 {
     FILE_NAME="$1"
-
     echo -ne "checking for $FILE_NAME..."
     which $FILE_NAME > /dev/null
     if [ $? -eq 0 ]
@@ -213,6 +163,7 @@ function find_path
         return 1
     fi
 }
+
 function install_updog
 {
     $PIP_COMMANDS install updog
@@ -222,25 +173,15 @@ function install_updog
 
 function install_go
 {
-
     wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash
-    source ~/.bashrc
-
 }
 
-function uninstall_go
-{
-
-    wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash -s -- --remove
-    source ~/.bashrc
-}
 # Make sure the user really wants to do this
 if [ $YES -eq 0 ]
 then
     echo ""
-    echo "WARNING: This script will download and install all required and optional dependencies for binwalk."
+    echo "WARNING: This script will download and install all required and optional dependencies for Legion-Bird."
     echo "         This script has only been tested on, and is only intended for, Debian based systems."
-    echo "         Some dependencies are downloaded via unsecure (HTTP) protocols."
     echo "         This script requires internet access."
     echo "         This script requires root privileges."
     echo ""
@@ -335,14 +276,13 @@ fi
 install_pip_package matplotlib
 install_pip_package capstone
 install_ffuf
-install_jefferson
-install_unstuff
-install_ubireader
 install_updog
 install_go
 
+# Requires goLang to be installed to run these
+install_waybackurls
 
-if [ $distro_version = "18" ]
-then
-install_cramfstools
-fi
+###############
+# Post execution cleanup and stuff
+###############
+source ~/.bashrc
