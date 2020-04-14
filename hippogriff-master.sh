@@ -63,7 +63,7 @@ fi
 REQUIRED_UTILS="wget tar python curl rename git"
 APTCMD="apt"
 APTGETCMD="apt-get"
-YUMCMD="yum"
+
 if [ $distro = "Kali" ]
 then
     APT_CANDIDATES="git build-essential mtd-utils gzip bzip2 tar arj lhasa p7zip p7zip-full cabextract util-linux firmware-mod-kit cramfsswap squashfs-tools zlib1g-dev liblzma-dev liblzo2-dev sleuthkit default-jdk lzop cpio"
@@ -93,7 +93,8 @@ if [[ $UID != 0 ]]; then
     echo "sudo $0 $*"
     exit 1
 fi
-
+# Possible fix for unbound variable issue?
+SUDO=sudo
 
 ##################################
 #  Install Variables (Global)
@@ -176,7 +177,7 @@ function install_go
 if [ $YES -eq 0 ]
 then
     echo " "
-    echo "WARNING: This script will download and install all required and optional dependencies for Legion-Bird."
+    echo "WARNING: This script will download and install all required and optional dependencies for Gryphon-Legion."
     echo "         This script has only been tested on, and is only intended for, Debian based systems."
     echo "         This script requires internet access."
     echo "         This script requires root privileges."
