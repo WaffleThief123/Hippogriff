@@ -61,7 +61,7 @@ else
     distro="${2:-$(lsb_release -i|cut -f 2)}"
     distro_version="${2:-$(lsb_release -r|cut -f 2|cut -c1-2)}"
 fi
-REQUIRED_UTILS="wget tar python curl rename git"
+REQUIRED_UTILS="wget tar python3 curl rename git sudo "
 APTCMD="apt"
 APTGETCMD="apt-get"
 
@@ -192,7 +192,9 @@ function install_updog
 
 function install_go
 {
-    wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash
+    sudo su -c "wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash"
+    source ~/.bashrc
+    
 }
 
 function install_cloudscraper
@@ -205,7 +207,7 @@ function install_cloudscraper
     wget "https://raw.githubusercontent.com/jordanpotti/CloudScraper/master/LICENSE" -O /tmp/CloudScraper/LICENSE
     cp /tmp/CloudScraper/* $MasterInstallDir/CloudScraper/
     echo "" >> ~/.bashrc
-    echo "# CloudScraper alias for .bashrc to make work." 
+    echo "# CloudScraper alias for .bashrc to make work." >> ~/.bashrc
     echo 'alias cloudscraper="python3 /usr/lib/hippogriff/CloudScraper/cloudscraper.py"' >> ~/.bashrc
 }
 
