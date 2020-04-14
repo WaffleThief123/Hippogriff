@@ -233,10 +233,17 @@ function install_linkfinder
 if [ $YES -eq 0 ]
 then
     echo " "
-    echo "WARNING: This script will download and install all required and optional dependencies for Gryphon-Legion."
-    echo "         This script has only been tested on, and is only intended for, Debian based systems."
-    echo "         This script requires internet access."
-    echo "         This script requires root privileges."
+    echo "WARNING:  This script will download and install all required and optional dependencies for Gryphon-Legion."
+    echo "          This script has only been tested on, and is only intended for, Debian based systems."
+    echo "          This script requires internet access."
+    echo "          This script requires root privileges."
+    echo "          This script does take a few minutes to install, depending on CPU resources availible, as there  "
+    echo "           is a decent amount of code compilation that occurs."
+    echo ""
+    echo ""
+    echo "          This script puts files in the following directories:"
+    echo "          /usr/bin/hippogriff  $HOME/.rbenv/  /tmp/ "             
+
     echo ""
     if [ $distro != Unknown ]
     then
