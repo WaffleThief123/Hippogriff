@@ -87,7 +87,7 @@ YUM_CANDIDATES="git gcc gcc-c++ make openssl-devel qtwebkit-devel qt-devel gzip 
 PYTHON2_YUM_CANDIDATES="python-pip python-Bottleneck cpio"
 FULLAPT_CANDIDATES="$APT_CANDIDATES $PYTHON2_APT_CANDIDATES"
 YUM_CANDIDATES="$YUM_CANDIDATES $PYTHON2_YUM_CANDIDATES"
-PIP_COMMANDS="pip"
+PIP_COMMANDS="pip3"
 
 
 ###################
