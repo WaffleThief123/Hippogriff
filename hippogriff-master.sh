@@ -172,15 +172,18 @@ function install_secretz
     go get -u github.com/lc/secretz
     echo "enter your TravisCI api key now" && \
     read TravisCIKey && \
-    echo "Is this the right key?     " $TravisCIKey 
-    if [ $? -eq 0 ]
-    then
-        echo "Sorry, Please run secretz -setkey <yourapikey> after the installer completes to add your API key."
-    else
-        echo "Thank you, User! I'll go ahead and tuck this away somewhere safe."
-        secretz -setkey $TravisCIKey 
-        
-    fi    
+    echo "Please make sure this is correct." 
+    echo $TravisCIKey 
+    
+    read -r -p "Does it look correct? [y/N] " travisCIResponse
+    if [[ "$travisCIResponse" =~ ^([yY][eE][sS]|[yY])$ ]]
+        then
+            echo "Thank you, User! I'll go ahead and tuck this away somewhere safe."
+            secretz -setkey $TravisCIKey 
+        else
+            echo "Sorry, Please run secretz -setkey <yourapikey> after the installer completes to add your API key." 
+    fi
+    
 }
 
 
