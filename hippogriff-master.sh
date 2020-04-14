@@ -105,6 +105,9 @@ fi
 #  Install Variables (Global)
 ##################################
 MasterInstallDir=/usr/lib/hippogriff
+mkdir $MasterInstallDir
+
+
 # Possible fix for unbound variable issue?
 SUDO=sudo
 
@@ -209,6 +212,7 @@ function install_cloudscraper
 function install_linkfinder
 {
     mkdir $MasterInstallDir/linkfinder/
+    cd /tmp
     git clone https://github.com/GerbenJavado/LinkFinder.git
     cd /tmp/LinkFinder
     pip3 install -r requirements.txt
