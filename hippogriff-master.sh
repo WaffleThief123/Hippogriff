@@ -330,7 +330,7 @@ install_jefferson
 install_unstuff
 install_ubireader
 install_updog
-
+install_go
 
 
 if [ $distro_version = "18" ]
