@@ -191,6 +191,28 @@ function install_go
     wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash
 }
 
+function install_cloudscraper
+{
+    pip3 install requests rfc3987 termcolor BeautifulSoup4
+    mkdir /tmp/CloudScraper
+    mkdir $MasterInstallDir/CloudScraper/
+    cd /tmp/CloudScraper
+    wget "https://raw.githubusercontent.com/jordanpotti/CloudScraper/master/CloudScraper.py" -O /tmp/CloudScraper/cloudscraper.py
+    wget "https://raw.githubusercontent.com/jordanpotti/CloudScraper/master/LICENSE" -O /tmp/CloudScraper/LICENSE
+    cp /tmp/CloudScraper/* $MasterInstallDir/CloudScraper/
+    echo "" >> ~/.bashrc
+    echo "# CloudScraper alias for .bashrc to make work." 
+    echo 'alias cloudscraper="python3 /usr/lib/hippogriff/CloudScraper/cloudscraper.py"' >> ~/.bashrc
+}
+
+function install_linkfinder
+{
+
+
+    
+}
+
+
 # Make sure the user really wants to do this
 if [ $YES -eq 0 ]
 then
@@ -245,6 +267,7 @@ fi
 # Names of functions to install
 install_pip_package matplotlib
 install_pip_package capstone
+install_cloudscraper
 install_ffuf
 install_updog
 install_go
@@ -252,7 +275,7 @@ install_ruby
 
 # Requires goLang to be installed to run these
 install_waybackurls
-echo "Wayback URLS installed"
+
 
 # Requires ruby
 
