@@ -329,6 +329,7 @@ install_ffuf
 install_jefferson
 install_unstuff
 install_ubireader
+install_updog
 
 if [ $distro_version = "18" ]
 then
