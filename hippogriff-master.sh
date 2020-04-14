@@ -325,7 +325,6 @@ if [ $? -ne 0 ]
 fi
 install_pip_package matplotlib
 install_pip_package capstone
-install_sasquatch
 install_ffuf
 install_jefferson
 install_unstuff
