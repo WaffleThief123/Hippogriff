@@ -207,6 +207,19 @@ function find_path
     fi
 }
 
+function install_go
+{
+
+    wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash
+    source ~/.bashrc
+
+}
+function uninstall_go
+{
+
+    wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash -s -- --remove
+    source ~/.bashrc
+}
 # Make sure the user really wants to do this
 if [ $YES -eq 0 ]
 then
@@ -301,7 +314,8 @@ then
      PIP_COMMANDS="pip3 $PIP_COMMANDS"
 fi
 
-# Do the install(s)
+# Do the needfull [install stuff]
+
 cd /tmp
 $SUDO $PKGCMD $PKGCMD_OPTS $PKG_CANDIDATES
 if [ $? -ne 0 ]
