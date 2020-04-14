@@ -131,7 +131,7 @@ function install_ffuf
     fi
 # ffuf cleanup
 rm /tmp/ffuf/*.tar.gz
-mkdir $MasterInstallDir/ffuf && cp -r /tmp/ffuf/ $MasterInstallDir/
+mkdir -p $MasterInstallDir/ffuf/ && cp /tmp/ffuf/* $MasterInstallDir/ffuf/
 echo "ffuf install success"
 
 }
