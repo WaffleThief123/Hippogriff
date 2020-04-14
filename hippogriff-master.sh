@@ -8,6 +8,15 @@ echo "
 ╚════██║██╔═══╝ ██╔══██║██╔══██╗   ██║   ██╔══██║╚════╝██╔══██╗██║██╔══██╗██║  ██║
 ███████║██║     ██║  ██║██║  ██║   ██║   ██║  ██║      ██████╔╝██║██║  ██║██████╔╝
 ╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝      ╚═════╝ ╚═╝╚═╝  ╚═╝╚═════╝ 
+
+Brought to you:
+ScaredPelican
+Gryphon
+QwertyKB
+
+Contributions from:
+batman
+
 "
                                                                                   
 
@@ -40,7 +49,7 @@ then
         fi
     }
 fi
-sysVER=arch
+
 if [ $YES -eq 0 ]
 then
     distro="${1:-$(lsb_release -i|cut -f 2)}"
@@ -49,7 +58,7 @@ else
     distro="${2:-$(lsb_release -i|cut -f 2)}"
     distro_version="${2:-$(lsb_release -r|cut -f 2|cut -c1-2)}"
 fi
-REQUIRED_UTILS="wget tar python curl rename"
+REQUIRED_UTILS="wget tar python curl rename git"
 APTCMD="apt"
 APTGETCMD="apt-get"
 YUMCMD="yum"
@@ -118,7 +127,8 @@ function install_waybackurls
 {
     git clone https://gist.github.com/Alyssa-o-Herrera/987dd305b0b637b3f67842eb6844d4ba
     mv 987dd305b0b637b3f67842eb6844d4ba/waybackurls.py ./
-
+    #can be replaced with go get github.com/tomnomnom/waybackurls instead, provides more functionality  
+}
 function install_jefferson
 {
     install_pip_package "cstruct==1.0"
