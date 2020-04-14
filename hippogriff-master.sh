@@ -105,6 +105,7 @@ fi
 function install_ffuf
 {
     yes | $PIP_COMMANDS install lastversion
+    rm -rf /tmp/fuff/
     mkdir /tmp/fuff
     cd /tmp/fuff/
     lastversion -d --assets https://github.com/ffuf/ffuf/
@@ -125,8 +126,7 @@ function install_ffuf
         tar -xzf linux_arm*
     fi
 # cleanup
-rm /tmp/ffuf/*.tar.gz
-echo "ffuf install success"
+rm /tmp/ffuf/*.tar.gz && echo "ffuf install success"
 }
 
 function install_waybackurls
