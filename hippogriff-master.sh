@@ -121,6 +121,13 @@ function install_ruby
     echo 'eval "$(rbenv init -)"' >> ~/.bashrc
     echo 'export PATH="/usr/lib/hippogriff/rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
     source ~/.bashrc
+    echo "This might take awhile depending on your CPU resources."
+    rbenv install 2.7.1
+    mkdir $MasterInstallDir/rbenv/versions/
+    mv ~/.rbenv/versions/2.7.1/ $MasterInstallDir/rbenv/versions/
+    echo "" >> ~/.bashrc
+    echo "# Ruby Version added as alias to run proper" ~/.bashrc
+    echo "alias ruby=/usr/lib/hippogriff/rbenv/versions/2.7.1/bin/ruby" >> ~/.bashrc
 }
 
 
