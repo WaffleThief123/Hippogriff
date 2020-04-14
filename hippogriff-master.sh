@@ -313,13 +313,6 @@ then
     exit 1
 fi
 
-# Check to see if we should install modules for python3 as well
-find_path python3
-if [ $? -eq 0 ]
-then
-     PKG_CANDIDATES="$PKG_CANDIDATES $PKG_PYTHON3_CANDIDATES"
-     PIP_COMMANDS="pip3 $PIP_COMMANDS"
-fi
 
 # Do the needfull [install stuff]
 
