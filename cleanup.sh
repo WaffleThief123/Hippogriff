@@ -17,5 +17,7 @@ echo "This script is to enable build-testing. will not be around long."
 
 rm -rf /tmp/*
 rm -rf $MasterInstallDir
+rm -rf ~/.rbenv
+
 echo "Don't forget to clean up your ~/.bashrc!!!!"
 vim ~/.bashrc
