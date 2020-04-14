@@ -138,6 +138,7 @@ echo "ffuf install success"
 
 function install_waybackurls
 {
+   source ~/.bashrc
    go get github.com/tomnomnom/waybackurls
    
 }
@@ -219,53 +220,9 @@ do
         NEEDED_UTILS="$NEEDED_UTILS $UTIL"
     fi
 done
-
-# Check for supported package managers and set the PKG_* envars appropriately
-#find_path $APTCMD
-#if [ $? -eq 1 ]
-#then
-#    find_path $APTGETCMD
-#    if [ $? -eq 1 ]
-#    then
-#        find_path $YUMCMD
-#        if [ $? -eq 1 ]
-#        then
-#            NEEDED_UTILS="$NEEDED_UTILS $APTCMD/$APTGETCMD/$YUMCMD"
-#        else
-#            PKGCMD="$YUMCMD"
-#            PKGCMD_OPTS="-y install"
-#            PKG_CANDIDATES="$YUM_CANDIDATES"
-#            PKG_PYTHON3_CANDIDATES="$PYTHON3_YUM_CANDIDATES"
-#        fi
-#    else
-#        PKGCMD="$APTGETCMD"
-#        PKGCMD_OPTS="install -y"
-#        PKG_CANDIDATES="$FULLAPT_CANDIDATES"
-#        PKG_PYTHON3_CANDIDATES="$PYTHON3_APT_CANDIDATES"
-#    fi
-#else
-#    if "$APTCMD" install -s -y dpkg > /dev/null
-#    then
-#        PKGCMD="$APTCMD"
-#        PKGCMD_OPTS="install -y"
-#        PKG_CANDIDATES="$APT_CANDIDATES"
-#        PKG_PYTHON3_CANDIDATES="$PYTHON3_APT_CANDIDATES"
-#    else
-        PKGCMD="$APTGETCMD"
-        PKGCMD_OPTS="install -y"
-        PKG_CANDIDATES="$APT_CANDIDATES"
-        PKG_PYTHON3_CANDIDATES="$PYTHON3_APT_CANDIDATES"
-#    fi
-#fi
-
-#if [ "$NEEDED_UTILS" != "" ]
-#then
-#    echo "Please install the following required utilities: $NEEDED_UTILS"
-#    exit 1
-#fi
-
-
-# Do the needfull [install stuff]
+############################################
+# Do the needfull [Actually install stuff] #
+############################################
 cd /tmp
 $SUDO $PKGCMD $PKGCMD_OPTS $PKG_CANDIDATES
 if [ $? -ne 0 ]
