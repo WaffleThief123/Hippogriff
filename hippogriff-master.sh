@@ -131,7 +131,7 @@ echo "ffuf install success"
 
 function install_waybackurls
 {
-    git clone https://gist.github.com/Alyssa-o-Herrera/987dd305b0b637b3f67842eb6844d4ba
+   clone https://gist.github.com/Alyssa-o-Herrera/987dd305b0b637b3f67842eb6844d4ba
     mv 987dd305b0b637b3f67842eb6844d4ba/waybackurls.py ./
     #can be replaced with go get github.com/tomnomnom/waybackurls instead, provides more functionality  
 }
@@ -220,6 +220,7 @@ function install_go
     source ~/.bashrc
 
 }
+
 function uninstall_go
 {
 
@@ -326,7 +327,7 @@ cd /tmp
 $SUDO $PKGCMD $PKGCMD_OPTS $PKG_CANDIDATES
 if [ $? -ne 0 ]
     then
-    echo "Package installation failed: $PKG_CANDIDATES"
+    echo "Package installation failed!!!!: $PKG_CANDIDATES"
     exit 1
 fi
 install_pip_package matplotlib
