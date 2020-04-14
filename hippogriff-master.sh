@@ -113,6 +113,7 @@ SUDO=sudo
 
 function install_ruby
 {
+    echo "RBENV_ROOT=/usr/lib/hippogriff/rbenv/" >> ~/.bashrc
     git clone https://github.com/rbenv/rbenv.git /tmp/rbenv
     git clone https://github.com/rbenv/ruby-build.git /tmp/rbenv/plugins/ruby-build
     mv /tmp/rbenv $MasterInstallDir/
@@ -123,8 +124,6 @@ function install_ruby
     source ~/.bashrc
     echo "This might take awhile depending on your CPU resources."
     rbenv install 2.7.1
-    mkdir $MasterInstallDir/rbenv/versions/
-    mv ~/.rbenv/versions/2.7.1/ $MasterInstallDir/rbenv/versions/
     echo "" >> ~/.bashrc
     echo "# Ruby Version added as alias to run proper" ~/.bashrc
     echo "alias ruby=/usr/lib/hippogriff/rbenv/versions/2.7.1/bin/ruby" >> ~/.bashrc
