@@ -206,6 +206,12 @@ function find_path
         return 1
     fi
 }
+function install_updog
+{
+    pip3 install updog
+    echo "" >> ~/.bashrc
+    echo "alias updog=~/.local/bin/updog" >> ~/.bashrc
+}
 
 function install_go
 {
