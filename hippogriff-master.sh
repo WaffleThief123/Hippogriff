@@ -105,9 +105,9 @@ fi
 function install_ffuf
 {
     yes | $PIP_COMMANDS install lastversion
-    rm -rf /tmp/fuff/
-    mkdir /tmp/fuff
-    cd /tmp/fuff/
+    rm -rf /tmp/ffuf/
+    mkdir /tmp/ffuf
+    cd /tmp/ffuf/
     lastversion -d --assets https://github.com/ffuf/ffuf/
     rename 's/ffuf_?..?..?..?_*//;' *
     # psuedocode:
@@ -127,6 +127,7 @@ function install_ffuf
     fi
 # cleanup
 rm /tmp/ffuf/*.tar.gz && echo "ffuf install success"
+
 }
 
 function install_waybackurls
