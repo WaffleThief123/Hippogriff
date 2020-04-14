@@ -323,6 +323,8 @@ if [ $? -ne 0 ]
     echo "Package installation failed: $PKG_CANDIDATES"
     exit 1
 fi
+
+# Names of functions to install
 install_pip_package matplotlib
 install_pip_package capstone
 install_ffuf
