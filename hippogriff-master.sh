@@ -78,7 +78,6 @@ else
     APT_CANDIDATES="git build-essential mtd-utils gzip bzip2 tar arj lhasa p7zip p7zip-full cabextract cramfsprogs cramfsswap squashfs-tools zlib1g-dev liblzma-dev liblzo2-dev sleuthkit default-jdk lzop srecord cpio $PYTHON3_APT_CANDIDATES libyaml-dev libssl-dev libreadline-dev libncurses5-dev libgdbm-dev bison autotools-dev autoconf automake"
 fi
 
-PYTHON3_APT_CANDIDATES="python3-crypto python3-pip python3-tk"
 FULLAPT_CANDIDATES="$APT_CANDIDATES"
 
 
@@ -89,7 +88,7 @@ PIP_COMMANDS="pip3"
 PKGCMD=apt
 PKGCMD_OPTS="install -y"
 PKG_CANDIDATES="$APT_CANDIDATES"
-PKG_PYTHON3_CANDIDATES="$PYTHON3_APT_CANDIDATES"
+PKG_PYTHON3_CANDIDATES="python3-crypto python3-pip python3-tk"
 ###################
 ##  Maybe: Re-implement sudo prompt
 ###################
@@ -107,9 +106,6 @@ fi
 MasterInstallDir=/usr/lib/hippogriff
 mkdir $MasterInstallDir
 
-
-# Possible fix for unbound variable issue?
-SUDO=sudo
 
 function install_ruby
 {
@@ -193,7 +189,7 @@ function install_pip_package
 
     for PIP_COMMAND in $PIP_COMMANDS
     do
-        $SUDO $PIP_COMMAND install $PACKAGE
+        sudo $PIP_COMMAND install $PACKAGE
     done
 }
 
@@ -310,7 +306,7 @@ done
 # Do the needfull [Actually install stuff] #
 ############################################
 cd /tmp
-$SUDO $PKGCMD $PKGCMD_OPTS $PKG_CANDIDATES
+sudo $PKGCMD $PKGCMD_OPTS $PKG_CANDIDATES
 if [ $? -ne 0 ]
     then
     echo "Package installation failed: $PKG_CANDIDATES"
