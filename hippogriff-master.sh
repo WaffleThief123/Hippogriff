@@ -34,6 +34,15 @@ else
     YES=0
 fi
 
+###################
+# Pre-Init Global Variables
+###################
+PIP_COMMANDS="pip3"
+PKGCMD=apt
+PKGCMD_OPTS="install -y"
+PKG_PYTHON3_CANDIDATES="python3-crypto python3-pip python3-tk"
+
+
 set -o nounset
 
 if ! which lsb_release > /dev/null
@@ -81,18 +90,11 @@ fi
 FULLAPT_CANDIDATES="$APT_CANDIDATES"
 
 
-###################
-# Misc Global Variables
-###################
-PIP_COMMANDS="pip3"
-PKGCMD=apt
-PKGCMD_OPTS="install -y"
-PKG_CANDIDATES="$APT_CANDIDATES"
-PKG_PYTHON3_CANDIDATES="python3-crypto python3-pip python3-tk"
-###################
-##  Maybe: Re-implement sudo prompt
-###################
+
+############################
 # Check for root privileges
+############################
+
 if [[ $UID != 0 ]]; then
     echo "Please run this script with sudo:"
     echo "sudo $0 $*"
@@ -100,11 +102,13 @@ if [[ $UID != 0 ]]; then
 fi
 
 
-##################################
-#  Install Variables (Global)
-##################################
+#######################
+#  Post-init Variables
+#######################
 MasterInstallDir=/usr/lib/hippogriff
 mkdir $MasterInstallDir
+PKG_CANDIDATES="$APT_CANDIDATES"
+
 
 
 function install_ruby
