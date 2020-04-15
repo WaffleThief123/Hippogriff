@@ -70,13 +70,10 @@ else
     distro="${2:-$(lsb_release -i|cut -f 2)}"
     distro_version="${2:-$(lsb_release -r|cut -f 2|cut -c1-2)}"
 fi
-REQUIRED_UTILS="wget tar python3 curl rename git sudo "
+REQUIRED_UTILS=""
 APTCMD="apt"
 APTGETCMD="apt-get"
-APT_CANDIDATES="git build-essential mtd-utils gzip bzip2 tar arj lhasa p7zip p7zip-full cabextract cramfsprogs cramfsswap squashfs-tools zlib1g-dev liblzma-dev liblzo2-dev sleuthkit default-jdk lzop srecord cpio $PKG_PYTHON3_CANDIDATES libyaml-dev libssl-dev libreadline-dev libncurses5-dev libgdbm-dev bison autotools-dev autoconf automake"
-FULLAPT_CANDIDATES="$APT_CANDIDATES"
-
-
+FULLAPT_CANDIDATES="wget tar python3 curl rename git sudo build-essential mtd-utils gzip bzip2 tar arj lhasa p7zip p7zip-full cabextract squashfs-tools zlib1g-dev liblzma-dev liblzo2-dev sleuthkit default-jdk lzop srecord cpio $PKG_PYTHON3_CANDIDATES libyaml-dev libssl-dev libreadline-dev libncurses5-dev libgdbm-dev bison autotools-dev autoconf automake"
 
 ############################
 # Check for root privileges
@@ -88,13 +85,12 @@ if [[ $UID != 0 ]]; then
     exit 1
 fi
 
-
 #######################
 #  Post-init Variables
 #######################
 MasterInstallDir=/usr/lib/hippogriff
 mkdir $MasterInstallDir
-PKG_CANDIDATES="$APT_CANDIDATES"
+PKG_CANDIDATES="$FULLAPT_CANDIDATES"
 
 
 
