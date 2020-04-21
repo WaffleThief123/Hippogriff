@@ -169,6 +169,13 @@ function install_secretz
     
 }
 
+function install_LES
+{
+    wget "https://raw.githubusercontent.com/mzet-/linux-exploit-suggester/master/linux-exploit-suggester.sh" -O /tmp/hippogriff/LES.sh
+    chmod 777 /tmp/hippogriff/LES.sh
+    mv /tmp/hippogriff/LES.sh /bin/les
+    echo "Linux Exploit Suggester Installed at /bin/les" && echo "Linux Exploit Suggester Installed at /bin/les" >> /var/log/hippogriff
+}
 
 function install_pip_package
 {
@@ -309,6 +316,7 @@ install_updog
 install_go
 install_ruby
 install_linkfinder
+install_LES
 echo "Core Utils Installed"
 
 # Requires goLang to be installed to run these
